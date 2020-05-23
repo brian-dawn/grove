@@ -19,7 +19,6 @@ export default function Home() {
     const resp = await fetch("/api/notes", {
       method: "POST",
       headers: {
-        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(content),
@@ -32,6 +31,9 @@ export default function Home() {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
+  data.sort((a: Note, b: Note) => {
+    return b.timestamp - a.timestamp;
+  });
   return (
     <div>
       <label>
