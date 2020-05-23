@@ -3,8 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getNotes } from '../../libs/cabal'
 import {Note} from '../../libs/model'
 
-
-console.log('hello this is nodejs yes?')
+console.log('hello this is nodejs yes? Yep wow')
 
 export type Data = {
   name: string
