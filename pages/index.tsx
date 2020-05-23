@@ -14,8 +14,7 @@ export default function Home() {
     fetch
   );
 
-  const handleSubmit = async (event: any) => {
-    console.log("submit " + content);
+  const handleSubmit = async (content: string) => {
     const resp = await fetch("/api/notes", {
       method: "POST",
       headers: {
@@ -24,6 +23,7 @@ export default function Home() {
       body: JSON.stringify(content),
     });
     mutate(resp.body);
+    setContent("");
   };
   const onChangeContent = (evt: { target: { value: string } }) => {
     setContent(evt.target.value);
@@ -34,13 +34,27 @@ export default function Home() {
   data.sort((a: Note, b: Note) => {
     return b.timestamp - a.timestamp;
   });
+
   return (
     <div>
-      <label>
-        New Note:
-        <input type="text" name="content" onChange={onChangeContent} />
-      </label>
-      <input type="submit" value="Submit" onClick={handleSubmit} />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(content);
+        }}
+      >
+        <label>
+          New Note:
+          <input
+            value={content}
+            type="text"
+            name="content"
+            onChange={onChangeContent}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+
       {data.map((note) => {
         const date = new Date(note.timestamp);
         return (
