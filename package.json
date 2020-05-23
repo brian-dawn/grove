@@ -12,6 +12,18 @@
     "next": "9.3.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "cabal-client": "^4.1.0",
+    "cabal-core": "^10.0.1",
+    "fp-ts": "^2.6.1",
+    "hypercore": "^9.0.0",
+    "hyperswarm": "^2.14.0",
+    "hypertrie": "^5.0.1",
+    "io-ts": "^2.2.2",
+    "io-ts-types": "^0.5.6",
+    "level": "^6.0.1",
+    "moment": "^2.25.3",
+    "monocle-ts": "^2.1.0",
+    "newtype-ts": "^0.3.4",
     "swr": "^0.2.2"
   },
   "devDependencies": {
