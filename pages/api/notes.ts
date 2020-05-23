@@ -27,5 +27,6 @@ export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
     };
 
     shareMessage(baseMessage);
+    res.status(200).json(Object.values(getNotes()));
   }
 };

@@ -1,7 +1,6 @@
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 import Head from "next/head";
-import typeFetch from "../libs/fetch";
-import fetch from "isomorphic-unfetch";
+import fetch from "../libs/fetch";
 import useSWR from "swr";
 import { Data } from "./api/notes";
 import { Note } from "../libs/model";
@@ -10,9 +9,12 @@ import { useState } from "react";
 export default function Home() {
   const [content, setContent] = useState("");
 
-  const { data, error } = useSWR<Note[]>("/api/notes", typeFetch);
+  const { data, error, isValidating, mutate } = useSWR<Note[]>(
+    "/api/notes",
+    fetch
+  );
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: any) => {
     console.log("submit " + content);
     const resp = await fetch("/api/notes", {
       method: "POST",
@@ -22,6 +24,7 @@ export default function Home() {
       },
       body: JSON.stringify(content),
     });
+    mutate(resp.body);
   };
   const onChangeContent = (evt: { target: { value: string } }) => {
     setContent(evt.target.value);
@@ -31,13 +34,11 @@ export default function Home() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          New Note:
-          <input type="text" name="content" onChange={onChangeContent} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <label>
+        New Note:
+        <input type="text" name="content" onChange={onChangeContent} />
+      </label>
+      <input type="submit" value="Submit" onClick={handleSubmit} />
       {data.map((note) => {
         const date = new Date(note.timestamp);
         return (
