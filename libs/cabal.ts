@@ -1,9 +1,7 @@
 const Client = require("cabal-client");
-const level = require("level");
 
 import { parseBaseMessage, encodeBaseMessage, BaseMessage } from "./messages";
 import { DB, applyMessageToDB } from "./model";
-import fs from "fs";
 
 var cabalDetails: CabalDetails | undefined = undefined;
 
@@ -38,18 +36,6 @@ export async function setupCabal() {
   const dbPath = "/tmp/cabaldb-web";
   //const dbPath = "/tmp/cabaldb-web" + process.pid;
   console.log(`dbPath=${dbPath}`);
-
-  // const lockPath = `${dbPath}/${key}/views/LOCK`;
-  // console.log(`lockPath ${lockPath}`);
-  // if (fs.existsSync(lockPath)) {
-  //   console.log(
-  //     "The lock already exists, if we're in dev we can probably just delete it :P"
-  //   );
-  //   // TODO: Only do this in development.
-  //   fs.unlinkSync(lockPath);
-  // } else {
-  //   console.log("not deleting the lock");
-  // }
 
   const client: Client = new Client({
     config: {
