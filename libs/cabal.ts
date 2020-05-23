@@ -3,8 +3,6 @@ const Client = require("cabal-client");
 import { parseBaseMessage, encodeBaseMessage, BaseMessage } from "./messages";
 import { DB, applyMessageToDB } from "./model";
 
-var cabalDetails: CabalDetails | undefined = undefined;
-
 declare global {
   namespace NodeJS {
     interface Global {
@@ -12,6 +10,7 @@ declare global {
       setup: boolean;
       // The global in memory database.
       db: DB;
+      cabalDetails: CabalDetails;
     }
   }
 }
@@ -44,12 +43,12 @@ export async function setupCabal() {
   });
 
   // Lock attempt is here.
-  cabalDetails = await client.addCabal(key, () => {
+  global.cabalDetails = await client.addCabal(key, () => {
     console.log("done");
   });
 
-  cabalDetails.joinChannel("default");
-  const channels = cabalDetails.getChannels();
+  global.cabalDetails.joinChannel("default");
+  const channels = global.cabalDetails.getChannels();
   console.log(channels);
 
   const messages = await client.getMessages({
@@ -69,7 +68,7 @@ export async function setupCabal() {
     applyMessageToDB(global.db, parsedBaseMessage);
   });
 
-  cabalDetails.on("new-message", (info: CabalMessage) => {
+  global.cabalDetails.on("new-message", (info: CabalMessage) => {
     const parsedBaseMessage = parseBaseMessage(info.message.value.content.text);
     if (!parsedBaseMessage) {
       return;
@@ -83,4 +82,14 @@ export function getNotes() {
   return global.db.notes;
 }
 
+export function shareMessage(baseMessage: BaseMessage) {
+  global.cabalDetails?.publishMessage({
+    type: "chat/text",
+    content: {
+      text: encodeBaseMessage(baseMessage),
+      channel: "default",
+    },
+  });
+  applyMessageToDB(global.db, baseMessage);
+}
 Promise.all([setupCabal()]);
