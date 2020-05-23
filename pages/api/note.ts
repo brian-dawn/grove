@@ -12,10 +12,7 @@ export type Data = {
 
 export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
   if (req.method === "GET") {
-    // Fetch notes
-    const notes = getNotes();
-    const notesArr = Object.values(notes);
-    res.status(200).json(notesArr);
+    // Fetch notes (do nothing we'll return all the notes below.)
   } else if (req.method === "POST") {
     // Make a note
     const id = shortid.generate();
@@ -31,5 +28,21 @@ export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
 
     shareMessage(baseMessage);
     res.status(200).json(Object.values(getNotes()));
+  } else if (req.method === "DELETE") {
+    const id = req.query["id"];
+    if (typeof id === "string") {
+      const baseMessage: BaseMessage = {
+        messageTimestamp: Date.now(),
+        message: {
+          kind: "DeleteNote",
+          noteId: id,
+          deleted: true,
+        },
+      };
+
+      shareMessage(baseMessage);
+    }
   }
+
+  res.status(200).json(Object.values(getNotes()));
 };

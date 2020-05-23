@@ -30,7 +30,9 @@ export function applyMessageToDB(db: DB, message: BaseMessage) {
 
       break;
     case "DeleteNote":
-      db.notes[message.message.noteId].deleted = true;
+      if (db.notes[message.message.noteId]) {
+        db.notes[message.message.noteId].deleted = true;
+      }
       break;
   }
 }
