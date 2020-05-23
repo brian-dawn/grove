@@ -69,6 +69,7 @@ export async function setupCabal() {
   });
 
   global.cabalDetails.on("new-message", (info: CabalMessage) => {
+    console.log("received: " + info.message.value.content.text);
     const parsedBaseMessage = parseBaseMessage(info.message.value.content.text);
     if (!parsedBaseMessage) {
       return;
