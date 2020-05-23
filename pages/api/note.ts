@@ -12,7 +12,7 @@ export type Data = {
 
 export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
   if (req.method === "GET") {
-    // Fetch notes (do nothing we'll return all the notes below.)
+    res.status(200).json(Object.values(getNotes()));
   } else if (req.method === "POST") {
     // Make a note
     const id = shortid.generate();
@@ -41,8 +41,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
       };
 
       shareMessage(baseMessage);
+      res.status(200).json(Object.values(getNotes()));
     }
   }
-
-  res.status(200).json(Object.values(getNotes()));
 };
