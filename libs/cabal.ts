@@ -10,7 +10,7 @@ declare global {
       setup: boolean;
       // The global in memory database.
       db: DB;
-      cabalDetails: CabalDetails;
+      cabalDetails: CabalDetails | undefined;
     }
   }
 }
@@ -83,6 +83,12 @@ export function getNotes() {
 }
 
 export function shareMessage(baseMessage: BaseMessage) {
+  if (!global.cabalDetails) {
+    // TODO: Don't let the user submit if we don't have this yet.
+    console.log(
+      "oh no we don't have any cabal details, this message is probs gone"
+    );
+  }
   global.cabalDetails?.publishMessage({
     type: "chat/text",
     content: {
