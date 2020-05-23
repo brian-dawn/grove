@@ -5,14 +5,14 @@ import { Either, isRight, isLeft } from "fp-ts/lib/Either";
 
 const NewNote = t.type({
   kind: t.literal("NewNote"),
-  noteId: t.number,
+  noteId: t.string,
   content: t.string,
 });
 type NewNote = t.TypeOf<typeof NewNote>;
 
 const DeleteNote = t.type({
   kind: t.literal("DeleteNote"),
-  noteId: t.number,
+  noteId: t.string,
   deleted: t.boolean,
 });
 type DeleteNote = t.TypeOf<typeof DeleteNote>;

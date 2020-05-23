@@ -60,6 +60,7 @@ export default function Home() {
         return (
           <div key={note.timestamp}>
             ####################
+            <div>id: {note.id}</div>
             <div>{date.toLocaleString()}</div>
             <div>{note.content}</div>
             ####################

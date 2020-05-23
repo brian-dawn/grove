@@ -5,6 +5,7 @@ import * as t from "io-ts";
 import { BaseMessage } from "./messages";
 
 export const Note = t.type({
+  id: t.string,
   timestamp: t.number,
   content: t.string,
   deleted: t.boolean,
@@ -21,6 +22,7 @@ export function applyMessageToDB(db: DB, message: BaseMessage) {
   switch (message.message.kind) {
     case "NewNote":
       db.notes[message.message.noteId] = {
+        id: message.message.noteId,
         content: message.message.content,
         timestamp: message.messageTimestamp,
         deleted: false,
