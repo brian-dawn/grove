@@ -1,5 +1,6 @@
 const Client = require("cabal-client");
-
+const crypto = require("crypto");
+const bs58 = require("bs58");
 import { parseBaseMessage, encodeBaseMessage, BaseMessage } from "./messages";
 import { DB, applyMessageToDB } from "./model";
 
@@ -99,4 +100,17 @@ export function shareMessage(baseMessage: BaseMessage) {
   });
   applyMessageToDB(global.db, baseMessage);
 }
+
+// We use 32 bits of entropy for generating a new note ID. We check against all past notes in which
+// case we need to figure out what the odds of a collision are ala the birthday problem. 32 bits
+// should be enough, no one is going to go offline and then create 65000 notes or something.
+export function generateRandomNoteId() {
+  var id = undefined;
+  do {
+    id = bs58.encode(crypto.randomBytes(4));
+  } while (global.db.notes[id]);
+
+  return id;
+}
+
 Promise.all([setupCabal()]);

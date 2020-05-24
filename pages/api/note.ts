@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getNotes, shareMessage } from "../../libs/cabal";
+import { getNotes, shareMessage, generateRandomNoteId } from "../../libs/cabal";
 import { Note, applyMessageToDB } from "../../libs/model";
 import { BaseMessage, encodeBaseMessage } from "../../libs/messages";
-const shortid = require("shortid");
 
 export type Data = {
   name: string;
@@ -13,7 +12,7 @@ export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
     res.status(200).json(Object.values(getNotes()));
   } else if (req.method === "POST") {
     // Make a note
-    const id = shortid.generate();
+    const id = generateRandomNoteId();
 
     const baseMessage: BaseMessage = {
       tme: Date.now(),
