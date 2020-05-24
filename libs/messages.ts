@@ -4,16 +4,16 @@ import { Option, some, none } from "fp-ts/lib/Option";
 import { Either, isRight, isLeft } from "fp-ts/lib/Either";
 
 const NewNote = t.type({
-  kind: t.literal("NewNote"),
-  noteId: t.string,
-  content: t.string,
+  k: t.literal("NewNote"),
+  id: t.string,
+  body: t.string,
 });
 type NewNote = t.TypeOf<typeof NewNote>;
 
 const DeleteNote = t.type({
-  kind: t.literal("DeleteNote"),
-  noteId: t.string,
-  deleted: t.boolean,
+  k: t.literal("DeleteNote"),
+  id: t.string,
+  del: t.boolean,
 });
 type DeleteNote = t.TypeOf<typeof DeleteNote>;
 
@@ -21,8 +21,8 @@ const Message = t.union([NewNote, DeleteNote]);
 type Message = t.TypeOf<typeof Message>;
 
 export const BaseMessage = t.type({
-  message: Message,
-  messageTimestamp: t.number,
+  msg: Message,
+  tme: t.number,
 });
 export type BaseMessage = t.TypeOf<typeof BaseMessage>;
 

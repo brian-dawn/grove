@@ -66,20 +66,23 @@ export default function Home() {
         <input type="submit" value="Submit" />
       </form>
 
-      {data.map((note) => {
-        const date = new Date(note.timestamp);
-        return (
-          <div key={note.id}>
-            <div>####################</div>
-            <div>id: {note.id}</div>
-            <div>deleted: {note.deleted.toString()}</div>
-            <div>{date.toLocaleString()}</div>
-            <div>{note.content}</div>
-            <button onClick={() => deleteNote(note.id)}>delete me</button>
-            <div>####################</div>
-          </div>
-        );
-      })}
+      {data
+        .filter((note) => {
+          return !note.deleted;
+        })
+        .map((note) => {
+          const date = new Date(note.timestamp);
+          return (
+            <div key={note.id}>
+              <div>####################</div>
+              <div>id: {note.id}</div>
+              <div>{date.toLocaleString()}</div>
+              <div>{note.content}</div>
+              <button onClick={() => deleteNote(note.id)}>X</button>
+              <div>####################</div>
+            </div>
+          );
+        })}
     </div>
   );
 }

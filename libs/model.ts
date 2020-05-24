@@ -19,19 +19,19 @@ export type DB = t.TypeOf<typeof DB>;
 
 // Build up a database from messages, or apply a DB when new messages come on.
 export function applyMessageToDB(db: DB, message: BaseMessage) {
-  switch (message.message.kind) {
+  switch (message.msg.k) {
     case "NewNote":
-      db.notes[message.message.noteId] = {
-        id: message.message.noteId,
-        content: message.message.content,
-        timestamp: message.messageTimestamp,
+      db.notes[message.msg.id] = {
+        id: message.msg.id,
+        content: message.msg.body,
+        timestamp: message.tme,
         deleted: false,
       };
 
       break;
     case "DeleteNote":
-      if (db.notes[message.message.noteId]) {
-        db.notes[message.message.noteId].deleted = true;
+      if (db.notes[message.msg.id]) {
+        db.notes[message.msg.id].deleted = true;
       }
       break;
   }

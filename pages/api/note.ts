@@ -4,8 +4,6 @@ import { Note, applyMessageToDB } from "../../libs/model";
 import { BaseMessage, encodeBaseMessage } from "../../libs/messages";
 const shortid = require("shortid");
 
-console.log("hello this is nodejs yes? Yep wow");
-
 export type Data = {
   name: string;
 };
@@ -18,11 +16,11 @@ export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
     const id = shortid.generate();
 
     const baseMessage: BaseMessage = {
-      messageTimestamp: Date.now(),
-      message: {
-        kind: "NewNote",
-        noteId: id,
-        content: req.body,
+      tme: Date.now(),
+      msg: {
+        k: "NewNote",
+        id: id,
+        body: req.body,
       },
     };
 
@@ -32,11 +30,11 @@ export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
     const id = req.query["id"];
     if (typeof id === "string") {
       const baseMessage: BaseMessage = {
-        messageTimestamp: Date.now(),
-        message: {
-          kind: "DeleteNote",
-          noteId: id,
-          deleted: true,
+        tme: Date.now(),
+        msg: {
+          k: "DeleteNote",
+          id: id,
+          del: true,
         },
       };
 
