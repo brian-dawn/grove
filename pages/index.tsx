@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { Data } from "./api/note";
 import { Note } from "../libs/model";
 import { useState } from "react";
+import Markdown from "markdown-to-jsx";
 
 export default function Home() {
   const [content, setContent] = useState("");
@@ -56,12 +57,7 @@ export default function Home() {
       >
         <label>
           New Note:
-          <input
-            value={content}
-            type="text"
-            name="content"
-            onChange={onChangeContent}
-          />
+          <textarea value={content} name="content" onChange={onChangeContent} />
         </label>
         <input type="submit" value="Submit" />
       </form>
@@ -77,7 +73,7 @@ export default function Home() {
               <div>####################</div>
               <div>id: {note.id}</div>
               <div>{date.toLocaleString()}</div>
-              <div>{note.content}</div>
+              <Markdown>{note.content}</Markdown>
               <button onClick={() => deleteNote(note.id)}>X</button>
               <div>####################</div>
             </div>
