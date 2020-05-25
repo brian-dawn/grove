@@ -37,10 +37,11 @@ body {
 }
 
 .idViewer {
-  font-family: monaco;
+  font-family: monospace;
 }
 
 .topNavBar {
+  font-family: monospace;
   color: rgba(66, 66, 66, 0.7);
   background: rgba(247, 251, 240, 0.7);
   padding: 0.5em;
@@ -49,6 +50,7 @@ body {
 }
 
 .noteTopBar {
+  font-family: monospace;
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
   background: rgba(247, 251, 240, 0.7);
@@ -92,6 +94,7 @@ body {
 }
 
 .deleteButton {
+  font-family: monospace;
   cursor: pointer;
   border: 0px solid #ffffff;
   padding: 0.5em;
