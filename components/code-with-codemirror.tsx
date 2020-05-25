@@ -23,7 +23,7 @@ export default (props: any) => {
         options={{
           theme: "base16-light",
           mode: "markdown",
-          keyMap: "vim",
+          //keyMap: "vim",
 
           extraKeys: {
             "Ctrl-Space": "autocomplete",
