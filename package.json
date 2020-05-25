@@ -8,10 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "bs58": "^4.0.1",
     "cabal-client": "^4.1.0",
     "cabal-core": "^10.0.1",
+    "codemirror": "^5.54.0",
     "cors": "^2.8.5",
+    "css-loader": "^3.5.3",
     "fp-ts": "^2.6.1",
     "hypercore": "^9.0.0",
     "hyperswarm": "^2.14.0",
@@ -26,6 +29,7 @@
     "newtype-ts": "^0.3.4",
     "next": "9.3.5",
     "react": "16.13.1",
+    "react-codemirror2": "^7.2.0",
     "react-dom": "16.13.1",
     "swr": "^0.2.2"
   },

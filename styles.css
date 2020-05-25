@@ -1,0 +1,43 @@
+html {
+  font-size: 100%;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  background: #afd76b;
+  margin: auto;
+
+  max-width: 42em;
+  font-family: "Century Schoolbook L", Roboto, Georgia, Palatino,
+    "Palatino Linotype", Times, "Times New Roman", serif;
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 1em;
+}
+
+@media only screen and (min-width: 480px) {
+  body {
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+.markdownPreviewAndEditor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}

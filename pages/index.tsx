@@ -7,6 +7,14 @@ import { Note } from "../libs/model";
 import { useState } from "react";
 import Markdown from "markdown-to-jsx";
 
+import "../styles.css";
+
+import dynamic from "next/dynamic";
+const CodeWithCodemirror = dynamic(
+  import("../components/code-with-codemirror"),
+  { ssr: false }
+);
+
 export default function Home() {
   const [content, setContent] = useState("");
 
@@ -49,16 +57,22 @@ export default function Home() {
 
   return (
     <div>
+      <CodeWithCodemirror
+        value={content}
+        // @ts-ignore
+        onBeforeChange={(editor, data, value) => {
+          setContent(value);
+        }}
+        // @ts-ignore
+        onChange={(editor, data, value) => {}}
+      />
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit(content);
         }}
       >
-        <label>
-          New Note:
-          <textarea value={content} name="content" onChange={onChangeContent} />
-        </label>
+        <label>New Note:</label>
         <input type="submit" value="Submit" />
       </form>
 
