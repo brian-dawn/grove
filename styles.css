@@ -84,6 +84,7 @@ body {
 }
 
 .deleteButton {
+  cursor: pointer;
   border: 0px solid #ffffff;
   padding: 0.5em;
   height: 100%;
