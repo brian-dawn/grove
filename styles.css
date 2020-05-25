@@ -26,12 +26,14 @@ body {
   }
 }
 
-.noteViewer {
-  padding: 1em;
-}
 .note {
   border-radius: 0.5em;
   background: #f7fbf0;
   padding: 1em;
   margin-top: 1em;
+}
+
+.CodeMirror {
+  font-family: monospace;
+  font-size: 14px;
 }

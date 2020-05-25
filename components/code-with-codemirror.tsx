@@ -10,7 +10,14 @@ export default (props: any) => (
     <CodeMirror
       {...props}
       value={props.value}
-      options={{ theme: "base16-light", mode: "markdown", keyMap: "vim" }}
+      editorDidMount={(editor) => {
+        editor.setSize("100%", "6em");
+      }}
+      options={{
+        theme: "base16-light",
+        mode: "markdown",
+        wow: "20",
+      }}
       onChange={() => null}
     />
   </div>
