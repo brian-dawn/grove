@@ -86,7 +86,10 @@ export default function Home() {
           return (
             <div>
               <div key={"top" + note.id} className={"noteTopBar"}>
+                <div className={"idViewer"}>{note.id}</div>
+                <div className={"spacer"} />
                 <div>{date.toLocaleString()}</div>
+                <div className={"spacer"} />
                 <button
                   className={"deleteButton"}
                   onClick={() => deleteNote(note.id)}

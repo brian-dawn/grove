@@ -32,6 +32,14 @@ body {
   }
 }
 
+.spacer {
+  margin-left: 1em;
+}
+
+.idViewer {
+  font-family: monaco;
+}
+
 .topNavBar {
   color: rgba(66, 66, 66, 0.7);
   background: rgba(247, 251, 240, 0.7);
