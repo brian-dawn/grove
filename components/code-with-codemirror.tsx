@@ -4,6 +4,7 @@ import "codemirror/mode/javascript/javascript";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/base16-light.css";
 import "codemirror/keymap/vim";
+import "codemirror/keymap/emacs";
 
 export default (props: any) => (
   <div>
@@ -16,9 +17,8 @@ export default (props: any) => (
       options={{
         theme: "base16-light",
         mode: "markdown",
-        wow: "20",
+        keyMap: "vim",
       }}
-      onChange={() => null}
     />
   </div>
 );

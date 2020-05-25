@@ -7,12 +7,17 @@ html {
 
 body {
   background: #afd76b;
+  background: #f6769d;
+  background: #716799;
+  background: #f676e1;
+  background: #76b8f6;
+  background: #f6dc76;
+  background: #f69476;
   margin: auto;
 
   max-width: 42em;
   font-family: "Century Schoolbook L", Roboto, Georgia, Palatino,
     "Palatino Linotype", Times, "Times New Roman", serif;
-  padding: 1em;
 }
 
 @media only screen and (min-width: 480px) {
@@ -24,6 +29,12 @@ body {
   body {
     font-size: 18px;
   }
+}
+
+.topNavBar {
+  color: rgba(66, 66, 66, 0.7);
+  background: rgba(247, 251, 240, 0.7);
+  padding: 0.5em;
 }
 
 .noteTopBar {
@@ -50,15 +61,23 @@ body {
   border-bottom-right-radius: 0.5em;
   background: #f7fbf0;
   padding-top: 0.5em;
-  padding-bottom: 1em;
+  padding-bottom: 0.5em;
   padding-left: 1em;
   padding-right: 1em;
+}
+
+.codeMirrorContainer {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  padding: 0.5em;
+  background: #f7fbf0;
 }
 
 .CodeMirror {
   font-family: monospace;
   font-size: 14px;
 }
+
 .deleteButton {
   border: 0px solid #ffffff;
   padding: 0.5em;

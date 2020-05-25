@@ -34,9 +34,6 @@ export default function Home() {
     mutate(resp.body);
     //setContent("");
   };
-  const onChangeContent = (evt: { target: { value: string } }) => {
-    setContent(evt.target.value);
-  };
 
   const deleteNote = async (noteId: string) => {
     const resp = await fetch(`/api/note?id=${noteId}`, {
@@ -57,25 +54,29 @@ export default function Home() {
 
   return (
     <div>
-      <CodeWithCodemirror
-        value={content}
-        // @ts-ignore
-        onBeforeChange={(editor, data, value) => {
-          setContent(value);
-        }}
-        // @ts-ignore
-        onChange={(editor, data, value) => {}}
-      />
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(content);
-        }}
-      >
-        <label>New Note:</label>
-        <input type="submit" value="Submit" />
-      </form>
-
+      <div className={"topNavBar"}>Top Nav Bar Stuff</div>
+      <div className={"codeMirrorContainer"}>
+        <CodeWithCodemirror
+          value={content}
+          // @ts-ignore
+          onBeforeChange={(editor, data, value) => {
+            setContent(value);
+          }}
+          // @ts-ignore
+          onChange={(editor, data, value) => {
+            setContent(value);
+          }}
+        />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(content);
+          }}
+        >
+          <label>New Note:</label>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
       {data
         .filter((note) => {
           return !note.deleted;
