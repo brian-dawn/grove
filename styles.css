@@ -51,8 +51,8 @@ body {
 
 .noteTopBar {
   font-family: monospace;
-  border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em;
+  border-top-left-radius: 0.22em;
+  border-top-right-radius: 0.22em;
   background: rgba(247, 251, 240, 0.7);
   margin-top: 0.5em;
 
@@ -72,8 +72,8 @@ body {
 }
 
 .note {
-  border-bottom-left-radius: 0.5em;
-  border-bottom-right-radius: 0.5em;
+  border-bottom-left-radius: 0.22em;
+  border-bottom-right-radius: 0.22em;
   background: #f7fbf0;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
@@ -82,8 +82,8 @@ body {
 }
 
 .codeMirrorContainer {
-  border-bottom-left-radius: 0.5em;
-  border-bottom-right-radius: 0.5em;
+  border-bottom-left-radius: 0.22em;
+  border-bottom-right-radius: 0.22em;
   padding: 0.5em;
   background: #f7fbf0;
 }
