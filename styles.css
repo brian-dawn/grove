@@ -6,13 +6,13 @@ html {
 }
 
 body {
-  background: #afd76b;
-  background: #f6769d;
   background: #716799;
   background: #f676e1;
   background: #76b8f6;
   background: #f6dc76;
   background: #f69476;
+  background: #f6769d;
+  background: #afd76b;
   margin: auto;
   color: #444;
 
@@ -46,7 +46,7 @@ body {
   background: rgba(247, 251, 240, 0.7);
   padding: 0.5em;
 
-  border-bottom: 1px solid rgba(189, 192, 183, 0.7);
+  border-bottom: 1px solid rgba(189, 192, 183, 0.4);
 }
 
 .noteTopBar {
@@ -63,7 +63,7 @@ body {
   white-space: nowrap;
   text-align: right;
 
-  border-bottom: 1px solid rgba(189, 192, 183, 0.7);
+  border-bottom: 1px solid rgba(189, 192, 183, 0.4);
 }
 
 .noteTopBar * {
