@@ -17,6 +17,7 @@ const CodeWithCodemirror = dynamic(
 
 export default function Home() {
   const [content, setContent] = useState("");
+  const [hashCompletion, setHashCompletion] = useState("");
 
   const { data, error, isValidating, mutate } = useSWR<Note[]>(
     "/api/note",
@@ -60,11 +61,27 @@ export default function Home() {
           value={content.toUpperCase()}
           // @ts-ignore
           onBeforeChange={(editor, data, value) => {
+            // We're in hash completion
+            if (hashCompletion !== "") {
+
+              const validHashTagCharacters = /^[0-9a-zA-Z]+$/;
+              if (data.text.join("").match(validHashTagCharacters)) {
+                setHashCompletion(hashCompletion + data.text.join(""))
+                console.log("continuing hashtag completion " + hashCompletion)
+              } else {
+                // Finish completion.
+                console.log("finishing hashtag completion " + hashCompletion)
+                setHashCompletion("")
+              }
+            } else if (data.text[0] === "@") {
+              console.log("starting hashtag completion")
+              // We have a hashtag so start hash completion.
+              setHashCompletion(data.text.join(""))
+            }
             setContent(value);
           }}
           // @ts-ignore
           onChange={(editor, data, value) => {
-            setContent(value);
           }}
         />
         <form
@@ -76,6 +93,7 @@ export default function Home() {
           <label>New Note:</label>
           <input type="submit" value="Submit" />
         </form>
+        <Markdown>{content}</Markdown>
       </div>
       {data
         .filter((note) => {
