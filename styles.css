@@ -12,8 +12,6 @@ body {
   max-width: 42em;
   font-family: "Century Schoolbook L", Roboto, Georgia, Palatino,
     "Palatino Linotype", Times, "Times New Roman", serif;
-  font-size: 14px;
-  line-height: 1.7;
   padding: 1em;
 }
 
@@ -28,16 +26,12 @@ body {
   }
 }
 
-.markdownPreviewAndEditor {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
+.noteViewer {
+  padding: 1em;
 }
-
-.column {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
+.note {
+  border-radius: 0.5em;
+  background: #f7fbf0;
+  padding: 1em;
+  margin-top: 1em;
 }
