@@ -83,11 +83,19 @@ export default function Home() {
         .map((note) => {
           const date = new Date(note.timestamp);
           return (
-            <div key={note.id} className={"note"}>
-              <div>id: {note.id}</div>
-              <div>{date.toLocaleString()}</div>
-              <Markdown>{note.content}</Markdown>
-              <button onClick={() => deleteNote(note.id)}>X</button>
+            <div>
+              <div key={"top" + note.id} className={"noteTopBar"}>
+                <div>{date.toLocaleString()}</div>
+                <button
+                  className={"deleteButton"}
+                  onClick={() => deleteNote(note.id)}
+                >
+                  Delete
+                </button>
+              </div>
+              <div key={note.id} className={"note"}>
+                <Markdown>{note.content}</Markdown>
+              </div>
             </div>
           );
         })}

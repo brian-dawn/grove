@@ -26,14 +26,50 @@ body {
   }
 }
 
-.note {
-  border-radius: 0.5em;
-  background: #f7fbf0;
-  padding: 1em;
+.noteTopBar {
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  background: rgba(247, 251, 240, 0.7);
   margin-top: 1em;
+
+  font-size: 0.8em;
+  color: rgba(66, 66, 66, 0.7);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.noteTopBar * {
+  align-content: right;
+  display: inline;
+}
+
+.note {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #f7fbf0;
+  padding-top: 0.5em;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .CodeMirror {
   font-family: monospace;
   font-size: 14px;
+}
+.deleteButton {
+  border: 0px solid #ffffff;
+  padding: 0.5em;
+  height: 100%;
+
+  color: rgba(66, 66, 66, 0.7);
+  background-color: rgba(0, 0, 0, 0);
+}
+.deleteButton:hover {
+  background: rgba(217, 221, 210, 0.6);
+}
+.deleteButton:active {
+  background-color: rgba(0, 0, 0, 0);
 }
