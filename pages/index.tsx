@@ -57,7 +57,7 @@ export default function Home() {
       <div className={"topNavBar"}>Top Nav Bar Stuff</div>
       <div className={"codeMirrorContainer"}>
         <CodeWithCodemirror
-          value={content}
+          value={content.toUpperCase()}
           // @ts-ignore
           onBeforeChange={(editor, data, value) => {
             setContent(value);
