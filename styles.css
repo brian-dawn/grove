@@ -60,6 +60,7 @@ body {
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
   background: #f7fbf0;
+  border-top: 1px solid rgba(189, 192, 183, 0.7);
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   padding-left: 1em;
