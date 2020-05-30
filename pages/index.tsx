@@ -21,9 +21,9 @@ function renderCardLinks(body: string) {
   // TODO: in the future the link should be a shortened title or something.
   return body.replace(
     re,
-    (match: string, p1: string, p2: string, offset: number, s: string) => {
-      console.log(match, p1, p2);
-      return `<a href="#${p1}"}>${p1}</a>`;
+    (match: string, p1: string, offset: number, s: string) => {
+      console.log(match, p1);
+      return `[[<a href="#${p1}"}>${p1}</a>]]`;
     }
   );
 }
