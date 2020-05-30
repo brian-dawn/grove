@@ -15,9 +15,22 @@ const CodeWithCodemirror = dynamic(
   { ssr: false }
 );
 
+function renderCardLinks(body: string) {
+  const re = /\[\[(.*?)\]\]/;
+
+  // TODO: in the future the link should be a shortened title or something.
+  return body.replace(
+    re,
+    (match: string, p1: string, p2: string, offset: number, s: string) => {
+      return `<a href="#${p1}"}>${p1}</a>`;
+    }
+  );
+}
+
 export default function Home() {
   const [content, setContent] = useState("");
   const [hashCompletion, setHashCompletion] = useState("");
+  const [cardCompletion, setCardCompletion] = useState("");
 
   const { data, error, isValidating, mutate } = useSWR<Note[]>(
     "/api/note",
@@ -63,26 +76,24 @@ export default function Home() {
           onBeforeChange={(editor, data, value) => {
             // We're in hash completion
             if (hashCompletion !== "") {
-
               const validHashTagCharacters = /^[0-9a-zA-Z]+$/;
               if (data.text.join("").match(validHashTagCharacters)) {
-                setHashCompletion(hashCompletion + data.text.join(""))
-                console.log("continuing hashtag completion " + hashCompletion)
+                setHashCompletion(hashCompletion + data.text.join(""));
+                console.log("continuing hashtag completion " + hashCompletion);
               } else {
                 // Finish completion.
-                console.log("finishing hashtag completion " + hashCompletion)
-                setHashCompletion("")
+                console.log("finishing hashtag completion " + hashCompletion);
+                setHashCompletion("");
               }
             } else if (data.text[0] === "@") {
-              console.log("starting hashtag completion")
+              console.log("starting hashtag completion");
               // We have a hashtag so start hash completion.
-              setHashCompletion(data.text.join(""))
+              setHashCompletion(data.text.join(""));
             }
             setContent(value);
           }}
           // @ts-ignore
-          onChange={(editor, data, value) => {
-          }}
+          onChange={(editor, data, value) => {}}
         />
         <form
           onSubmit={(e) => {
@@ -103,7 +114,7 @@ export default function Home() {
           const date = new Date(note.timestamp);
           return (
             <div>
-              <div key={"top" + note.id} className={"noteTopBar"}>
+              <div id={note.id} key={"top" + note.id} className={"noteTopBar"}>
                 <div className={"idViewer"}>{note.id}</div>
                 <div className={"spacer"} />
                 <div>{date.toLocaleString()}</div>
@@ -116,7 +127,7 @@ export default function Home() {
                 </button>
               </div>
               <div key={note.id} className={"note"}>
-                <Markdown>{note.content}</Markdown>
+                <Markdown>{renderCardLinks(note.content)}</Markdown>
               </div>
             </div>
           );
