@@ -26,7 +26,6 @@ function findLinks(content: string): string[] {
   const re = /\[\[(.*?)\]\]/gi;
   let matches = matchAll(content, re);
   let results = matches.toArray();
-  console.log(results);
   return results;
 }
 // Build up a database from messages, or apply a DB when new messages come on.
@@ -36,8 +35,14 @@ export function applyMessageToDB(db: DB, message: BaseMessage) {
       // We need to updated the linkedFrom fields on any messages that we reference.
       // A message link is [[ID]]. TODO: we need to update this for edits/deletions too.
       let links = findLinks(message.msg.body);
+
       links.forEach((id) => {
-        db.notes[id]?.linkedFrom.push(message.msg.id);
+        const otherNote = db.notes[id];
+        if (otherNote) {
+          const froms = new Set(otherNote.linkedFrom);
+          froms.add(message.msg.id);
+          otherNote.linkedFrom = Array.from(froms.values());
+        }
       });
 
       db.notes[message.msg.id] = {
@@ -51,7 +56,21 @@ export function applyMessageToDB(db: DB, message: BaseMessage) {
 
       break;
     case "DeleteNote":
-      if (db.notes[message.msg.id]) {
+      const foundNote = db.notes[message.msg.id];
+      if (foundNote) {
+        // We need to clear the linkedFrom fields of relevant notes.
+        let links = findLinks(foundNote.content);
+        links.forEach((id) => {
+          const foundFrom = db.notes[id];
+          if (foundFrom) {
+            foundFrom.linkedFrom = foundFrom.linkedFrom.filter(
+              (linkedFromId) => {
+                return foundNote.id !== linkedFromId;
+              }
+            );
+          }
+        });
+
         db.notes[message.msg.id].deleted = true;
       }
       break;

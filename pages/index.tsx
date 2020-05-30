@@ -16,12 +16,13 @@ const CodeWithCodemirror = dynamic(
 );
 
 function renderCardLinks(body: string) {
-  const re = /\[\[(.*?)\]\]/;
+  const re = /\[\[(.*?)\]\]/gi;
 
   // TODO: in the future the link should be a shortened title or something.
   return body.replace(
     re,
     (match: string, p1: string, p2: string, offset: number, s: string) => {
+      console.log(match, p1, p2);
       return `<a href="#${p1}"}>${p1}</a>`;
     }
   );
@@ -117,6 +118,19 @@ export default function Home() {
               <div id={note.id} key={"top" + note.id} className={"noteTopBar"}>
                 <div className={"idViewer"}>{note.id}</div>
                 <div className={"spacer"} />
+                <div>
+                  {note.linkedFrom.length !== 0 && (
+                    <div className={"fromLink"}>from</div>
+                  )}
+                  {note.linkedFrom.map((id) => {
+                    return (
+                      <a href={`#${id}`} className={"fromLink"}>
+                        {id}
+                      </a>
+                    );
+                  })}
+                </div>
+                <div className={"spacer"} />
                 <div>{date.toLocaleString()}</div>
                 <div className={"spacer"} />
                 <button
@@ -128,12 +142,6 @@ export default function Home() {
               </div>
               <div key={note.id} className={"note"}>
                 <Markdown>{renderCardLinks(note.content)}</Markdown>
-                <div>
-                  linked by:{" "}
-                  {note.linkedFrom.map((id) => {
-                    return <a href={`#${id}`}>{id}</a>;
-                  })}
-                </div>
               </div>
             </div>
           );

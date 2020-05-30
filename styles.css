@@ -109,3 +109,7 @@ body {
 .deleteButton:active {
   background-color: rgba(0, 0, 0, 0);
 }
+
+.fromLink {
+  padding-right: 0.5em;
+}
