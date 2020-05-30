@@ -15,7 +15,7 @@ const CodeWithCodemirror = dynamic(
   { ssr: false }
 );
 
-function renderCardLinks(body: string) {
+function renderCardLinks(body: string, notesById: Map<string, Note>) {
   const re = /\[\[(.*?)\]\]/gi;
 
   // TODO: in the future the link should be a shortened title or something.
@@ -23,9 +23,16 @@ function renderCardLinks(body: string) {
     re,
     (match: string, p1: string, offset: number, s: string) => {
       console.log(match, p1);
-      return `[[<a href="#${p1}"}>${p1}</a>]]`;
+      return `[[<a href="#${p1}"}>${renderLink(p1, notesById)}</a>]]`;
     }
   );
+}
+
+function renderLink(id: string, notesById: Map<string, Note>) {
+  // TODO: render based on title first.
+  // Then summary.
+  // Then id/date or something.
+  return notesById.get(id)?.content.substr(0, 20) || id;
 }
 
 export default function Home() {
@@ -62,6 +69,11 @@ export default function Home() {
   };
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
+
+  const notesById: Map<string, Note> = data.reduce(function (map, obj) {
+    map.set(obj.id, obj);
+    return map;
+  }, new Map<string, Note>());
 
   data.sort((a: Note, b: Note) => {
     return b.timestamp - a.timestamp;
@@ -125,7 +137,7 @@ export default function Home() {
                   {note.linkedFrom.map((id) => {
                     return (
                       <a href={`#${id}`} className={"fromLink"}>
-                        {id}
+                        {renderLink(id, notesById)}
                       </a>
                     );
                   })}
@@ -141,7 +153,7 @@ export default function Home() {
                 </button>
               </div>
               <div key={note.id} className={"note"}>
-                <Markdown>{renderCardLinks(note.content)}</Markdown>
+                <Markdown>{renderCardLinks(note.content, notesById)}</Markdown>
               </div>
             </div>
           );
