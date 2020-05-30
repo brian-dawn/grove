@@ -24,6 +24,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "level": "^6.0.1",
     "markdown-to-jsx": "^6.11.4",
+    "match-all": "^1.2.5",
     "moment": "^2.25.3",
     "monocle-ts": "^2.1.0",
     "newtype-ts": "^0.3.4",

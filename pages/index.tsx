@@ -128,6 +128,12 @@ export default function Home() {
               </div>
               <div key={note.id} className={"note"}>
                 <Markdown>{renderCardLinks(note.content)}</Markdown>
+                <div>
+                  linked by:{" "}
+                  {note.linkedFrom.map((id) => {
+                    return <a href={`#${id}`}>{id}</a>;
+                  })}
+                </div>
               </div>
             </div>
           );
