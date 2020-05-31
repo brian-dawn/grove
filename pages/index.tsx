@@ -18,12 +18,21 @@ const CodeWithCodemirror = dynamic(
 function renderCardLinks(body: string, notesById: Map<string, Note>) {
   const re = /\[\[(.*?)\]\]/gi;
 
-  // TODO: in the future the link should be a shortened title or something.
   return body.replace(
     re,
     (match: string, p1: string, offset: number, s: string) => {
-      console.log(match, p1);
       return `[[<a href="#${p1}"}>${renderLink(p1, notesById)}</a>]]`;
+    }
+  );
+}
+
+function renderTags(body: string) {
+  const re = /\@([a-zA-Z0-9]+)/gi;
+
+  return body.replace(
+    re,
+    (match: string, p1: string, offset: number, s: string) => {
+      return `@<a class="nav" href="#@${p1}"}>${p1}</a>`;
     }
   );
 }
@@ -32,7 +41,16 @@ function renderLink(id: string, notesById: Map<string, Note>) {
   // TODO: render based on title first.
   // Then summary.
   // Then id/date or something.
-  return notesById.get(id)?.content.substr(0, 20) || id;
+  const content = notesById.get(id)?.content;
+  if (content) {
+    const summary = content.replace(/\#|<|>|\[|\]/g, "").trim();
+    if (summary.length > 20) {
+      return summary.substr(0, 20) + "...";
+    } else {
+      return summary;
+    }
+  }
+  return id;
 }
 
 export default function Home() {
@@ -153,7 +171,9 @@ export default function Home() {
                 </button>
               </div>
               <div key={note.id} className={"note"}>
-                <Markdown>{renderCardLinks(note.content, notesById)}</Markdown>
+                <Markdown>
+                  {renderTags(renderCardLinks(note.content, notesById))}
+                </Markdown>
               </div>
             </div>
           );
