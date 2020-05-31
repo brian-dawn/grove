@@ -145,11 +145,10 @@ export default function Home() {
           <label>New Note:</label>
           <input type="submit" value="Submit" />
         </form>
-        <Markdown>{content}</Markdown>
+        <Link href="/">
+          <a>all</a>
+        </Link>
       </div>
-      <Link href="/">
-        <a>all</a>
-      </Link>
       {visibleNotes
         .filter((note) => {
           return !note.deleted;
