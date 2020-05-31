@@ -17,6 +17,64 @@ const CodeWithCodemirror = dynamic(
   { ssr: false }
 );
 
+interface Text {
+  kind: "text";
+  content: string;
+}
+interface NoteLink {
+  kind: "noteLink";
+  id: string;
+}
+interface Tag {
+  kind: "tag";
+  tag: string;
+}
+type ContentFragment = Text | NoteLink | Tag;
+
+// Take some content, find the special components within it and return a list
+// of all the sub components. We have text, noteLink, and tag.
+function splitContent(body: string): ContentFragment[] {
+  const noteLinkReg = /^\[\[(.*?)\]\]$/;
+  const tagReg = /^(\@[a-zA-Z0-9]+)$/;
+
+  const parts = body.split(/(\@[a-zA-Z0-9]+)|(\[\[.*?\]\])/gi);
+  return parts
+    .filter((part) => part)
+    .map((part) => {
+      if (tagReg.test(part)) {
+        return { kind: "tag", tag: part } as Tag;
+      } else if (noteLinkReg.test(part)) {
+        return {
+          kind: "noteLink",
+          id: part.substr(2, part.length - 4),
+        } as NoteLink;
+      } else {
+        return { kind: "text", content: part } as Text;
+      }
+    });
+}
+
+function renderContent(body: string, notesById: Map<string, Note>) {
+  //
+  const frags = splitContent(body);
+  return frags.map((frag) => {
+    switch (frag.kind) {
+      case "text":
+        return <Markdown>{frag.content}</Markdown>;
+
+      case "noteLink":
+        return (
+          <div className="frag">
+            [[<a href={"#" + frag.id}>{renderLink(frag.id, notesById)}</a>]]
+          </div>
+        );
+
+      case "tag":
+        return <a href={"#" + frag.tag}>{frag.tag}</a>;
+    }
+  });
+}
+
 function renderCardLinks(body: string, notesById: Map<string, Note>) {
   const re = /\[\[(.*?)\]\]/gi;
 
@@ -189,9 +247,7 @@ export default function Home() {
                 </button>
               </div>
               <div key={note.id} className={"note"}>
-                <Markdown>
-                  {renderTags(renderCardLinks(note.content, notesById))}
-                </Markdown>
+                {renderContent(note.content, notesById)}
               </div>
             </div>
           );

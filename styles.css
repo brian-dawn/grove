@@ -21,7 +21,7 @@ body {
     "Palatino Linotype", Times, "Times New Roman", serif;
 }
 
-a.nav {
+.frag {
   word-wrap: normal;
   display: inline-block;
 }
