@@ -13,6 +13,7 @@ import { Note } from "../libs/model";
 interface NoteComponentProps {
   note: Note;
   notesById: Map<string, Note>;
+  deleteNoteFn: () => void;
 }
 
 interface Text {
@@ -101,6 +102,7 @@ export const NoteComponent = (props: NoteComponentProps) => {
   const notesById = props.notesById;
 
   const date = new Date(note.timestamp);
+
   return (
     <div>
       <div id={note.id} key={"top" + note.id} className={"noteTopBar"}>
@@ -109,7 +111,7 @@ export const NoteComponent = (props: NoteComponentProps) => {
         <div className={"spacer"} />
         <div>{date.toLocaleString()}</div>
         <div className={"spacer"} />
-        <button className={"deleteButton"} onClick={() => deleteNote(note.id)}>
+        <button className={"deleteButton"} onClick={() => props.deleteNoteFn()}>
           Delete
         </button>
       </div>

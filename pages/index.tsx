@@ -122,7 +122,15 @@ export default function Home() {
           return !note.deleted;
         })
         .map((note) => {
-          return <NoteComponent note={note} notesById={notesById} />;
+          return (
+            <NoteComponent
+              note={note}
+              notesById={notesById}
+              deleteNoteFn={() => {
+                deleteNote(note.id);
+              }}
+            />
+          );
         })}
     </div>
   );
