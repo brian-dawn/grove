@@ -17,10 +17,21 @@ const CodeWithCodemirror = dynamic(
   { ssr: false }
 );
 
+const colorThemes = [
+  "#afd76b",
+  "#716799",
+  "#f676e1",
+  "#76b8f6",
+  "#f6dc76",
+  "#f69476",
+  "#f6769d",
+];
+
 export default function Home() {
   const [content, setContent] = useState("");
   const [hashCompletion, setHashCompletion] = useState("");
   const [cardCompletion, setCardCompletion] = useState("");
+  const [colorTheme, setColorTheme] = useState(colorThemes[0]);
   const router = useRouter();
 
   // We want to read the path fragment (url/#foo) because this is how
@@ -43,6 +54,13 @@ export default function Home() {
     });
     mutate(resp.body);
     //setContent("");
+  };
+
+  const selectNewColorTheme = async () => {
+    const currentThemeIndex = colorThemes.findIndex((theme) => {
+      return theme === colorTheme;
+    });
+    setColorTheme(colorThemes[(currentThemeIndex + 1) % colorThemes.length]);
   };
 
   const deleteNote = async (noteId: string) => {
@@ -83,7 +101,15 @@ export default function Home() {
 
   return (
     <div>
-      <div className={"topNavBar"}>Top Nav Bar Stuff</div>
+      <style jsx global>{`
+        body {
+          background-color: ${colorTheme};
+        }
+      `}</style>
+      <div className={"topNavBar"}>
+        Top Nav Bar Stuff
+        <button onClick={selectNewColorTheme}>Change Theme</button>
+      </div>
       <div className={"codeMirrorContainer"}>
         <CodeWithCodemirror
           value={content.toUpperCase()}

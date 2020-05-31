@@ -6,13 +6,6 @@ html {
 }
 
 body {
-  background: #716799;
-  background: #f676e1;
-  background: #76b8f6;
-  background: #f6dc76;
-  background: #f69476;
-  background: #f6769d;
-  background: #afd76b;
   margin: auto;
   color: #444;
 
@@ -24,7 +17,7 @@ body {
 a,
 a:visited,
 a:active {
-  color: #555;
+  color: blue;
 }
 
 a:hover {
