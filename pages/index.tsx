@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Markdown from "markdown-to-jsx";
 import Link from "next/link";
-
 import "../styles.css";
 
 import dynamic from "next/dynamic";
@@ -124,7 +123,7 @@ export default function Home() {
   const [cardCompletion, setCardCompletion] = useState("");
   const router = useRouter();
 
-  console.log(router.asPath);
+  console.log(router);
   // We want to read the path fragment (url/#foo) because this is how
   // we filter by hashtags. Maybe we should be using nextjs Link instead :P
   const tag = router.query["tag"];
@@ -161,7 +160,6 @@ export default function Home() {
 
   // We're searching by a tag.
   if (tag) {
-    console.log("filtering by tags");
     data = data.filter((note) => {
       return note.content.includes(tag);
     });
@@ -216,6 +214,9 @@ export default function Home() {
         </form>
         <Markdown>{content}</Markdown>
       </div>
+      <Link href="/">
+        <a>all</a>
+      </Link>
       {data
         .filter((note) => {
           return !note.deleted;
