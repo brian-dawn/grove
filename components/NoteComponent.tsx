@@ -60,7 +60,8 @@ function renderLink(id: string, notesById: Map<string, Note>) {
   const content = notesById.get(id)?.content;
   const previewSize = 40;
   if (content) {
-    const summary = content.replace(/\#|<|>|\[|\]/g, "").trim();
+    const firstLine = content.trim().split("\n")[0];
+    const summary = firstLine.replace(/\#|<|>|\[|\]/g, "").trim();
     if (summary.length > previewSize) {
       return summary.substr(0, previewSize - 3) + "...";
     } else {
