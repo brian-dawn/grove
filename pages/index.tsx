@@ -232,18 +232,6 @@ export default function Home() {
               <div id={note.id} key={"top" + note.id} className={"noteTopBar"}>
                 <div className={"idViewer"}>{note.id}</div>
                 <div className={"spacer"} />
-                <div>
-                  {note.linkedFrom.length !== 0 && (
-                    <div className={"fromLink"}>from</div>
-                  )}
-                  {note.linkedFrom.map((id) => {
-                    return (
-                      <a href={`#${id}`} className={"fromLink"}>
-                        {renderLink(id, notesById)}
-                      </a>
-                    );
-                  })}
-                </div>
                 <div className={"spacer"} />
                 <div>{date.toLocaleString()}</div>
                 <div className={"spacer"} />
@@ -254,6 +242,17 @@ export default function Home() {
                   Delete
                 </button>
               </div>
+              {note.linkedFrom.length !== 0 && (
+                <div className={"fromHeader"}>
+                  {note.linkedFrom.map((id) => {
+                    return (
+                      <a href={`#${id}`} className={"fromLink"}>
+                        {renderLink(id, notesById)}
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
               <div key={note.id} className={"note"}>
                 {renderContent(note.content, notesById)}
               </div>

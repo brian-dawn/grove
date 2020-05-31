@@ -73,7 +73,8 @@ body {
 
 .noteTopBar * {
   align-content: right;
-  display: inline;
+
+  display: inline-block;
 }
 
 .note {
@@ -115,6 +116,16 @@ body {
   background-color: rgba(0, 0, 0, 0);
 }
 
+.fromHeader {
+  font-family: monospace;
+  background: rgba(247, 251, 240, 0.7);
+
+  padding: 0.5em;
+  font-size: 0.8em;
+  color: rgba(66, 66, 66, 0.7);
+
+  border-bottom: 1px solid rgba(189, 192, 183, 0.4);
+}
 .fromLink {
   padding-right: 0.5em;
 }
