@@ -121,6 +121,7 @@ export const NoteComponent = (props: NoteComponentProps) => {
       </div>
       {note.linkedFrom.length !== 0 && (
         <div className={"fromHeader"}>
+          Linked from:
           {note.linkedFrom.map((id) => {
             return (
               <Link href={`/?id=${id}`}>

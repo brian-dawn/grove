@@ -21,6 +21,16 @@ body {
     "Palatino Linotype", Times, "Times New Roman", serif;
 }
 
+a,
+a:visited,
+a:active {
+  color: #555;
+}
+
+a:hover {
+  color: black;
+}
+
 .frag {
   word-wrap: normal;
   display: inline-block;
