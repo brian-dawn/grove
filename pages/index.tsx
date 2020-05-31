@@ -5,7 +5,9 @@ import useSWR from "swr";
 import { Data } from "./api/note";
 import { Note } from "../libs/model";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Markdown from "markdown-to-jsx";
+import Link from "next/link";
 
 import "../styles.css";
 
@@ -32,7 +34,9 @@ function renderTags(body: string) {
   return body.replace(
     re,
     (match: string, p1: string, offset: number, s: string) => {
-      return `@<a class="nav" href="#@${p1}"}>${p1}</a>`;
+      return `@<a class="nav" 
+                href="/?tag=@${p1}"}>${p1}</a>`;
+      //return `@<Link href="/?tag=10><a>${p1}</a></Link>`;
     }
   );
 }
@@ -57,8 +61,14 @@ export default function Home() {
   const [content, setContent] = useState("");
   const [hashCompletion, setHashCompletion] = useState("");
   const [cardCompletion, setCardCompletion] = useState("");
+  const router = useRouter();
 
-  const { data, error, isValidating, mutate } = useSWR<Note[]>(
+  console.log(router.asPath);
+  // We want to read the path fragment (url/#foo) because this is how
+  // we filter by hashtags. Maybe we should be using nextjs Link instead :P
+  const tag = router.query["tag"];
+
+  var { data, error, isValidating, mutate } = useSWR<Note[]>(
     "/api/note",
     fetch
   );
@@ -87,6 +97,14 @@ export default function Home() {
   };
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
+
+  // We're searching by a tag.
+  if (tag) {
+    console.log("filtering by tags");
+    data = data.filter((note) => {
+      return note.content.includes(tag);
+    });
+  }
 
   const notesById: Map<string, Note> = data.reduce(function (map, obj) {
     map.set(obj.id, obj);
