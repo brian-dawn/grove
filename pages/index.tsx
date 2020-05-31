@@ -61,11 +61,15 @@ function renderContent(body: string, notesById: Map<string, Note>) {
         return <Markdown>{frag.content}</Markdown>;
 
       case "noteLink":
-        return (
-          <div className="frag">
-            [[<a href={"#" + frag.id}>{renderLink(frag.id, notesById)}</a>]]
-          </div>
-        );
+        if (notesById.get(frag.id)) {
+          return (
+            <div className="frag">
+              [[<a href={"#" + frag.id}>{renderLink(frag.id, notesById)}</a>]]
+            </div>
+          );
+        } else {
+          return <div className="frag">[[{frag.id}]]</div>;
+        }
 
       case "tag":
         return (
