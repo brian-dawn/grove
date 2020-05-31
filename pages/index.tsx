@@ -110,10 +110,11 @@ function renderLink(id: string, notesById: Map<string, Note>) {
   // Then summary.
   // Then id/date or something.
   const content = notesById.get(id)?.content;
+  const previewSize = 40;
   if (content) {
     const summary = content.replace(/\#|<|>|\[|\]/g, "").trim();
-    if (summary.length > 20) {
-      return summary.substr(0, 20) + "...";
+    if (summary.length > previewSize) {
+      return summary.substr(0, previewSize - 3) + "...";
     } else {
       return summary;
     }
