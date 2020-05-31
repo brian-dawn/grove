@@ -55,7 +55,6 @@ function splitContent(body: string): ContentFragment[] {
 }
 
 function renderContent(body: string, notesById: Map<string, Note>) {
-  //
   const frags = splitContent(body);
   return frags.map((frag) => {
     switch (frag.kind) {
@@ -70,7 +69,11 @@ function renderContent(body: string, notesById: Map<string, Note>) {
         );
 
       case "tag":
-        return <a href={"#" + frag.tag}>{frag.tag}</a>;
+        return (
+          <Link href={`/?tag=${frag.tag}`}>
+            <a>{frag.tag}</a>
+          </Link>
+        );
     }
   });
 }
