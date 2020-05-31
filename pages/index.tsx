@@ -23,10 +23,10 @@ export default function Home() {
   const [cardCompletion, setCardCompletion] = useState("");
   const router = useRouter();
 
-  console.log(router);
   // We want to read the path fragment (url/#foo) because this is how
   // we filter by hashtags. Maybe we should be using nextjs Link instead :P
   const tag = router.query["tag"];
+  const id = router.query["id"];
 
   var { data, error, isValidating, mutate } = useSWR<Note[]>(
     "/api/note",
@@ -58,19 +58,26 @@ export default function Home() {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  // We're searching by a tag.
-  if (tag) {
-    data = data.filter((note) => {
-      return note.content.includes(tag);
-    });
-  }
-
   const notesById: Map<string, Note> = data.reduce(function (map, obj) {
     map.set(obj.id, obj);
     return map;
   }, new Map<string, Note>());
 
-  data.sort((a: Note, b: Note) => {
+  let visibleNotes = data;
+  if (id) {
+    // We want to view a specific note.
+    // TODO: In this view we might want to view other notes that are similar in context.
+    visibleNotes = data.filter((note) => {
+      return note.id === id;
+    });
+  } else if (tag) {
+    // We're searching by a tag.
+    visibleNotes = data.filter((note) => {
+      return note.content.includes(tag);
+    });
+  }
+
+  visibleNotes.sort((a: Note, b: Note) => {
     return b.timestamp - a.timestamp;
   });
 
@@ -117,7 +124,7 @@ export default function Home() {
       <Link href="/">
         <a>all</a>
       </Link>
-      {data
+      {visibleNotes
         .filter((note) => {
           return !note.deleted;
         })

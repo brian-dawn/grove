@@ -81,7 +81,11 @@ function renderContent(body: string, notesById: Map<string, Note>) {
         if (notesById.get(frag.id)) {
           return (
             <div className="frag">
-              [[<a href={"#" + frag.id}>{renderLink(frag.id, notesById)}</a>]]
+              [[
+              <Link href={`/?id=${frag.id}`}>
+                <a>{renderLink(frag.id, notesById)}</a>
+              </Link>
+              ]]
             </div>
           );
         } else {
@@ -119,9 +123,9 @@ export const NoteComponent = (props: NoteComponentProps) => {
         <div className={"fromHeader"}>
           {note.linkedFrom.map((id) => {
             return (
-              <a href={`#${id}`} className={"fromLink"}>
-                {renderLink(id, notesById)}
-              </a>
+              <Link href={`/?id=${id}`}>
+                <a className={"fromLink"}>{renderLink(id, notesById)}</a>
+              </Link>
             );
           })}
         </div>
