@@ -173,6 +173,7 @@ export const NoteComponent = (props: NoteComponentProps) => {
               setContent={setContent}
             />
             <button onClick={editNote}>submit</button>
+            <button onClick={() => setShowEditNote(false)}>nevermind</button>
           </div>
         )}
       </div>
