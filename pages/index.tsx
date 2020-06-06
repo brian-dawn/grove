@@ -121,6 +121,18 @@ export default function Home() {
     )
   );
 
+  const allTitles = data
+    .filter((note) => {
+      return !note.deleted;
+    })
+    .map((note) => {
+      // TODO: there is a title flag but it's not supplied yet.
+      return {
+        title: note.content.trim().split("\n")[0].replace("#", "").trim(),
+        id: note.id,
+      };
+    });
+
   return (
     <div>
       <style jsx global>{`
@@ -137,6 +149,7 @@ export default function Home() {
           initialContent={content}
           allTags={allTags}
           setContent={setContent}
+          allTitles={allTitles}
         />
         <form
           onSubmit={(e) => {
@@ -164,6 +177,7 @@ export default function Home() {
                 deleteNote(note.id);
               }}
               allTags={allTags}
+              allTitles={allTitles}
             />
           );
         })}

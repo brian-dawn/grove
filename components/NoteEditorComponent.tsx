@@ -7,6 +7,7 @@ interface NoteComponentProps {
   initialContent: string;
   setContent: (content: string) => void;
   allTags: string[];
+  allTitles: { id: string; title: string }[];
 }
 
 const Item = ({
@@ -37,6 +38,14 @@ export const NoteEditorComponent = (props: NoteComponentProps) => {
       }}
       rows={6}
       value={content}
+      onKeyDown={(event: any) => {
+        if (event.keyCode === 9) {
+          event.preventDefault();
+          props.setContent(content + "\t");
+          setContent(content + "\t");
+        }
+        console.log(event);
+      }}
       onChange={(event: any) => {
         // @ts-ignore
         props.setContent(event.target.value);
@@ -44,20 +53,6 @@ export const NoteEditorComponent = (props: NoteComponentProps) => {
         // @ts-ignore
         setContent(event.target.value);
       }}
-      // innerRef={(textarea) => {
-      //   if (textarea) {
-      //     textarea.value = content;
-      //     textarea.onchange = (event: Event) => {
-      //       console.log(event);
-      //       // @ts-ignore
-      //       props.setContent(event.target.value);
-
-      //       // @ts-ignore
-      //       setContent(event.target.value);
-      //     };
-      //     setTextArea(textarea);
-      //   }
-      // }}
       loadingComponent={() => <span>Loading</span>}
       trigger={{
         "@": {
@@ -71,35 +66,24 @@ export const NoteEditorComponent = (props: NoteComponentProps) => {
           component: Item,
           output: (item, trigger) => item.char,
         },
+        "[[": {
+          dataProvider: (token: string) => {
+            return props.allTitles
+              .filter((title) => {
+                return title.title.startsWith(token.replace("[", ""));
+              })
+              .map((title) => {
+                return {
+                  name: title.title.substr(0, 30),
+                  char: "[[" + title.id + "]]",
+                };
+              });
+          },
+          component: Item,
+          output: (item, trigger) => item.char,
+        },
       }}
       onCaretPositionChange={onCaretPositionChange}
     />
   );
-  // return (
-  //   <CodeWithCodemirror
-  //     value={content}
-  //     // @ts-ignore
-  //     onBeforeChange={(editor, data, value) => {
-  //       // We're in hash completion
-  //       if (hashCompletion !== "") {
-  //         const validHashTagCharacters = /^[0-9a-zA-Z]+$/;
-  //         if (data.text.join("").match(validHashTagCharacters)) {
-  //           setHashCompletion(hashCompletion + data.text.join(""));
-  //           console.log("continuing hashtag completion " + hashCompletion);
-  //         } else {
-  //           // Finish completion.
-  //           console.log("finishing hashtag completion " + hashCompletion);
-  //           setHashCompletion("");
-  //         }
-  //       } else if (data.text[0] === "@") {
-  //         console.log("starting hashtag completion");
-  //         // We have a hashtag so start hash completion.
-  //         setHashCompletion(data.text.join(""));
-  //       }
-  //       props.setContent(value);
-  //     }}
-  //     // @ts-ignore
-  //     onChange={(editor, data, value) => {}}
-  //   />
-  // );
 };
