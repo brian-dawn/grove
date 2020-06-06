@@ -41,20 +41,17 @@ export default (req: NextApiRequest, res: NextApiResponse<Note[]>) => {
       shareMessage(baseMessage);
       res.status(200).json(Object.values(getNotes()));
     } else if (req.method === "DELETE") {
-      const id = req.query["id"];
-      if (typeof id === "string") {
-        const baseMessage: BaseMessage = {
-          tme: Date.now(),
-          msg: {
-            k: "DeleteNote",
-            id: id,
-            del: true,
-          },
-        };
+      const baseMessage: BaseMessage = {
+        tme: Date.now(),
+        msg: {
+          k: "DeleteNote",
+          id: id,
+          del: true,
+        },
+      };
 
-        shareMessage(baseMessage);
-        res.status(200).json(Object.values(getNotes()));
-      }
+      shareMessage(baseMessage);
+      res.status(200).json(Object.values(getNotes()));
     }
   } else {
     // return error I guess.

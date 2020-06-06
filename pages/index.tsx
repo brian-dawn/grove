@@ -61,7 +61,7 @@ export default function Home() {
   };
 
   const deleteNote = async (noteId: string) => {
-    const resp = await fetch(`/api/note?id=${noteId}`, {
+    const resp = await fetch(`/api/note/${noteId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
