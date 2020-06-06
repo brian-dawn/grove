@@ -39,8 +39,10 @@ export const NoteEditorComponent = (props: NoteComponentProps) => {
       rows={6}
       value={content}
       onKeyDown={(event: any) => {
+        // Insert tabs.
         if (event.keyCode === 9) {
           event.preventDefault();
+          // TODO: This is gross, maybe we don't need to call both setContents?
           props.setContent(content + "\t");
           setContent(content + "\t");
         }
