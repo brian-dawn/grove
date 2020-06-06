@@ -128,8 +128,18 @@ export default function Home() {
     .map((note) => {
       // TODO: there is a title flag but it's not supplied yet.
       return {
-        title: note.content.trim().split("\n")[0].replace("#", "").trim(),
+        title: note.content.trim().split("\n")[0].trim(),
         id: note.id,
+      };
+    })
+    .filter((title) => {
+      // Titles are notes that start with any heading.
+      return title.title.startsWith("#");
+    })
+    .map((title) => {
+      return {
+        title: title.title.replace("#", "").trim(),
+        id: title.id,
       };
     });
 
