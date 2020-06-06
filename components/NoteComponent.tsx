@@ -15,6 +15,7 @@ interface NoteComponentProps {
   note: Note;
   notesById: Map<string, Note>;
   deleteNoteFn: () => void;
+  allTags: string[];
 }
 
 interface Text {
@@ -171,6 +172,7 @@ export const NoteComponent = (props: NoteComponentProps) => {
             <NoteEditorComponent
               initialContent={content}
               setContent={setContent}
+              allTags={props.allTags}
             />
             <button onClick={editNote}>submit</button>
             <button onClick={() => setShowEditNote(false)}>nevermind</button>

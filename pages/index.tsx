@@ -103,6 +103,24 @@ export default function Home() {
     return b.timestamp - a.timestamp;
   });
 
+  const allTags = Array.from(
+    new Set(
+      data
+        .filter((note) => {
+          return !note.deleted;
+        })
+        .flatMap((note) => {
+          const tagReg = /\@[a-zA-Z0-9]+/gi;
+
+          const found = note.content.matchAll(tagReg);
+          return Array.from(found);
+        })
+        .map((n) => {
+          return n[0].substr(1, n[0].length);
+        })
+    )
+  );
+
   return (
     <div>
       <style jsx global>{`
@@ -115,7 +133,11 @@ export default function Home() {
         <button onClick={selectNewColorTheme}>Change Theme</button>
       </div>
       <div className={"codeMirrorContainer"}>
-        <NoteEditorComponent initialContent={content} setContent={setContent} />
+        <NoteEditorComponent
+          initialContent={content}
+          allTags={allTags}
+          setContent={setContent}
+        />
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -141,6 +163,7 @@ export default function Home() {
               deleteNoteFn={() => {
                 deleteNote(note.id);
               }}
+              allTags={allTags}
             />
           );
         })}
