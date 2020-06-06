@@ -9,6 +9,7 @@ import Link from "next/link";
 import "../styles.css";
 
 import { Note } from "../libs/model";
+import { NoteEditorComponent } from "./NoteEditorComponent";
 
 interface NoteComponentProps {
   note: Note;
@@ -103,11 +104,32 @@ function renderContent(body: string, notesById: Map<string, Note>) {
   });
 }
 export const NoteComponent = (props: NoteComponentProps) => {
+  var { data, error, isValidating, mutate } = useSWR<Note[]>(
+    "/api/note",
+    fetch
+  );
   const note = props.note;
   const notesById = props.notesById;
 
+  const [content, setContent] = useState("");
+
   const date = new Date(note.timestamp);
 
+  const [showEditNote, setShowEditNote] = useState(false);
+
+  const editNote = async () => {
+    // Submit the note
+
+    const resp = await fetch(`/api/note/${note.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(content),
+    });
+    mutate(resp.body);
+    setShowEditNote(false);
+  };
   return (
     <div>
       <div id={note.id} key={"top" + note.id} className={"noteTopBar"}>
@@ -116,6 +138,16 @@ export const NoteComponent = (props: NoteComponentProps) => {
         <div className={"spacer"} />
         <div>{date.toLocaleString()}</div>
         <div className={"spacer"} />
+
+        <button
+          className={"deleteButton"}
+          onClick={() => {
+            setContent(note.content);
+            setShowEditNote(true);
+          }}
+        >
+          Edit
+        </button>
         <button className={"deleteButton"} onClick={() => props.deleteNoteFn()}>
           Delete
         </button>
@@ -133,7 +165,16 @@ export const NoteComponent = (props: NoteComponentProps) => {
         </div>
       )}
       <div key={note.id} className={"note"}>
-        {renderContent(note.content, notesById)}
+        {!showEditNote && renderContent(note.content, notesById)}
+        {showEditNote && (
+          <div>
+            <NoteEditorComponent
+              initialContent={content}
+              setContent={setContent}
+            />
+            <button onClick={editNote}>submit</button>
+          </div>
+        )}
       </div>
     </div>
   );

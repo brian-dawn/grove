@@ -12,10 +12,7 @@ import "../styles.css";
 
 import dynamic from "next/dynamic";
 import { NoteComponent } from "../components/NoteComponent";
-const CodeWithCodemirror = dynamic(
-  import("../components/code-with-codemirror"),
-  { ssr: false }
-);
+import { NoteEditorComponent } from "../components/NoteEditorComponent";
 
 const colorThemes = [
   "#afd76b",
@@ -118,31 +115,7 @@ export default function Home() {
         <button onClick={selectNewColorTheme}>Change Theme</button>
       </div>
       <div className={"codeMirrorContainer"}>
-        <CodeWithCodemirror
-          value={content.toUpperCase()}
-          // @ts-ignore
-          onBeforeChange={(editor, data, value) => {
-            // We're in hash completion
-            if (hashCompletion !== "") {
-              const validHashTagCharacters = /^[0-9a-zA-Z]+$/;
-              if (data.text.join("").match(validHashTagCharacters)) {
-                setHashCompletion(hashCompletion + data.text.join(""));
-                console.log("continuing hashtag completion " + hashCompletion);
-              } else {
-                // Finish completion.
-                console.log("finishing hashtag completion " + hashCompletion);
-                setHashCompletion("");
-              }
-            } else if (data.text[0] === "@") {
-              console.log("starting hashtag completion");
-              // We have a hashtag so start hash completion.
-              setHashCompletion(data.text.join(""));
-            }
-            setContent(value);
-          }}
-          // @ts-ignore
-          onChange={(editor, data, value) => {}}
-        />
+        <NoteEditorComponent initialContent={content} setContent={setContent} />
         <form
           onSubmit={(e) => {
             e.preventDefault();

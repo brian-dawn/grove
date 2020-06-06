@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getNotes, shareMessage, generateRandomNoteId } from "../../libs/cabal";
 import { Note, applyMessageToDB } from "../../libs/model";
 import { BaseMessage, encodeBaseMessage } from "../../libs/messages";
-
+import { useRouter } from "next/router";
 export type Data = {
   name: string;
 };
