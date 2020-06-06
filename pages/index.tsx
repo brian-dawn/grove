@@ -91,7 +91,14 @@ export default function Home() {
   } else if (tag) {
     // We're searching by a tag.
     visibleNotes = data.filter((note) => {
-      return note.content.includes(tag);
+      if (typeof tag === "string") {
+        return note.content.includes(tag);
+      } else {
+        return (
+          tag.map((t) => note.content.includes(t)).filter((t) => !t).length ===
+          0
+        );
+      }
     });
   }
 
