@@ -95,6 +95,7 @@ a:hover {
   border-bottom-right-radius: 0.22em;
   padding: 0.5em;
   background: #f7fbf0;
+  margin-bottom: 1em;
 }
 
 .deleteButton {
