@@ -60,7 +60,9 @@ export const NoteEditorComponent = (props: NoteComponentProps) => {
         "@": {
           dataProvider: (token: string) => {
             return props.allTags
-              .filter((tag) => tag.startsWith(token))
+              .filter((tag) =>
+                tag.toLowerCase().startsWith(token.toLowerCase())
+              )
               .map((tag) => {
                 return { name: tag, char: "@" + tag };
               });
@@ -72,7 +74,9 @@ export const NoteEditorComponent = (props: NoteComponentProps) => {
           dataProvider: (token: string) => {
             return props.allTitles
               .filter((title) => {
-                return title.title.startsWith(token.replace("[", ""));
+                return title.title
+                  .toLowerCase()
+                  .startsWith(token.replace("[", "").toLowerCase());
               })
               .map((title) => {
                 return {
