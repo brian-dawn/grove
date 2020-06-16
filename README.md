@@ -1,5 +1,7 @@
 # Grove
 
+Hosted on [SourceHut](https://git.sr.ht/~brian-dawn/grove) but also hosted on [Github](https://github.com/brian-dawn/grove) for convenience. If you're curious why SourceHut is neat check out [this](https://sourcehut.org/blog/2019-10-23-srht-puts-users-first/).
+
 An entirely peer to peer notetaking app that even works offline. This is built atop
 [cabal chat](https://cabal.chat/).
 
